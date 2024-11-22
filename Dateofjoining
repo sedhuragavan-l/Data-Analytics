@@ -1,0 +1,37 @@
+
+use employee_db;
+
+create table Employees(
+EmpID int primary key,
+EmpName varchar(20) not null,
+EmpDept varchar(20) not null,
+dateofjoining date not null,
+EmpCity varchar(20) not null
+);
+ 
+insert into Employees(EmpID,EmpName,EmpDept,dateofjoining,EmpCity)
+values
+(101,'john','sales','2020-01-01','chennai'),
+(102,'ram','marketing','2018-03-01','madurai'),
+(103,'selva','IT','2017-10-04','villupuram'),
+(104,'naresh','finance','2015-08-03','delhi'),
+(105,'kavitha','operations','2012-11-15','pune'),
+(106,'ramya','research','2017-10-04','bangalore');
+
+select * from Employees;
+
+create view seniormost_employee as 
+select * from Employees order by dateofjoining asc limit 1;
+
+select * from seniormost_employee;
+
+DELIMITER //
+
+create procedure get_employees_by_year(in year_param int)
+begin 
+select * from Employees where year(dateofjoining)=year_param;
+END //
+
+DELIMITER ;
+
+call get_employees_by_year(2018);
